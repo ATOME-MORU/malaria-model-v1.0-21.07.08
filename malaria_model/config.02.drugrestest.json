@@ -1,0 +1,134 @@
+{
+    "simulation" : {
+        "schema_file_name" : "schema.config.json",
+        "total_steps" : 1825,
+        "title": "drugrestest",
+        "reports" : {
+            "prevalence_daily" : true,
+            "drug_daily" : true,
+            "infection_daily" : true,
+            "infection_daily_village" : true,
+            "mosquito_daily" : true
+        },
+        "plots" : {
+            "prevalence_daily_y_max" : 20
+        },
+        "batch_mode" : true
+    },
+    "village" : {
+        "data_file" : {
+            "name" : "data/regionsdatanew.txt",
+            "delimiter" : "t",
+            "rows_to_read" : 788,
+            "overwrite_ra_rate_if" : true,
+            "overwrite_ra_rate_with" : 0.2
+        }
+    },
+    "mobility" : {
+        "static_population_move_out_probability" : 0.6849,
+        "static_population_return_home_probability" : 0.333,
+        "non_static_population_move_out_probability" : 0.6849,
+        "non_static_population_return_home_probability" : 0.333
+    },
+    "treatment" : {
+        "timecomp" : 3.5,
+        "fullcourse" : 0.8,
+        "covab" : 0.6,
+        "nomp" : 0.1,
+        "asymptomatic_to_clinical_ratio" : 0.0001,
+        "treatment_rate_mda" : 0.66666,
+        "func_treatment_general_version" : "-"
+    },
+    "infection" : {
+        "init_with_uniform_prevalence_if" : true,
+        "init_with_uniform_prevalence_with" : 0.15,
+        "init_transmission_coefficient_scaling_factor_a" : 5.1,
+        "init_transmission_coefficient_scaling_factor_b" : 0.75,
+        "transmission_coefficient_to_beta_scaling_factor" : 0.3695,
+        "use_all_infectious_bites" : true,
+        "susceptibility_multiplier" : 1.0,
+        "infectiousness_multiplier" : 1.0
+    },
+    "mosquito" : {
+        "init" : {
+            "infected_mosquito_to_infected_human_ratio" : 0.00,
+            "infectious_mosquito_to_infected_human_ratio" : 0.00
+        },
+        "seasonality" : {
+            "use_data_file" : false,
+            "data_file" : {
+                "name" : "data/seasonality_100years4.txt"
+            },
+            "amplitude" : 0.6,
+            "amplitude_multiplier" : 0.5
+        },
+        "itn" : {
+            "preference_indoor" : 1.0,
+            "preference_human" : 1.0,
+            "effectiveness" : 0.25
+        },
+        "incubation_days" : 14.0,
+        "infected_days" : 20.0,
+        "infectious_days" : 7.0
+    },
+    "human" : {
+        "male_percentage" : 0.482,
+        "age_weight_vector_file" : "data/age_weights_vector_demo.txt",
+        "itn_probability" : 0.7,
+        "death_func" : {
+            "sig" : 0.1,
+            "mu1" : 35.0,
+            "mu"  : 0.000060822
+        }
+    },
+    "within_host" : {
+        "init_file" : {
+            "name" : "data/agestruct-drugrestest.txt",
+            "delimiter" : "t",
+            "use_age_column" : true
+        },
+        "init_clinical_probability" : 0.05,
+        "susceptibility_default" : 1.0,
+        "infectiousness_default" : 1.0,
+        "phi_a" : 1.0,
+        "phi_c" : 1.0,
+        "prophylaxis_effect" : 1.0,
+        "func_clinical_probability_blood_to_infectious_version" : 1,
+        "mellow_days" : 3.0,
+        "natural_recovery_days" : 160.0,
+        "immunity" : {
+            "days_until_loss_start" : 40,
+            "level_until_loss_start" : 0,
+            "loss_days" : 60.0
+        }
+    },
+    "drug" : {
+        "failure_if_clinical_on_day" : 28
+    },
+    "genotype" : {
+        "mutation_probabilities" : [0.2,0.2,0.2,0.2,0.2,0.2,0.2]
+    },
+    "intervention" : {
+        "mda" : {
+            "num_teams" : 400,
+            "schedule" : [9365],
+
+            "num_days_spent_in_village" : 4,
+            "num_drug_rounds" : 3,
+            "num_days_between_drug_rounds" : 32
+        },
+        "fmda" : {
+            "num_teams" : 30,
+            "schedule" : [90000],
+
+            "num_days_spent_in_village" : 4,
+            "num_drug_rounds" : 3,
+            "num_days_between_drug_rounds" : 32,
+
+            "survey_data_delivery_delay" : 20,
+            "pcr_sensitivity" : 0.8,
+            "pcr_sample_size" : 50,
+            "prevalence_threshold" : 0.1
+        }
+    }
+}

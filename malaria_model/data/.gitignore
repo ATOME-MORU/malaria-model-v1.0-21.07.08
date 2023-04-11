@@ -1,0 +1,7 @@
+# Ignore everything in this directory
+/*
+# Except these file / directories
+!/test
+!regions_data_demo.txt
+!age_weights_vector_demo.txt
+!.gitignore

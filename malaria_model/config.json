@@ -1,0 +1,16 @@
+{
+    "village" :
+    {
+        "count" : 10,
+        "data_file" : 
+        {
+            "name" : "data/regions_datajuly2.txt",
+            "delimiter" : "t"
+        }
+    },
+    "human" :
+    {
+        "male_percentage" : 0.48,
+        "age_weight_vector_file": "data/age_weights_vector_demo.txt"
+    }
+}

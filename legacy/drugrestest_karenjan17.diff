@@ -1,0 +1,905 @@
+3c3
+< #include "aguasSIR.h"
+---
+> #include "aguasSIRk.h"
+5c5
+< //#include <omp.h>
+---
+> #include <omp.h>
+16c16
+<     G_xregion=788;
+---
+>     G_xregion=962;
+18c18,19
+<     G_nstartpoints=400;
+---
+>     G_nstartpoints=50;
+>     G_runs=10;
+20,21c21,22
+<     float G_prev = 0.15;
+<     float betaf=0.3695;
+---
+>     float G_prev = 0.06;
+>     float betaf=0.83;
+24,25c25,29
+<     G_trigger = 0.25*G_prev;
+< 
+---
+>     G_trigger = 4.0*G_prev;
+>     G_tauab = 1.0/1.5;
+>     G_phia = 0.5;
+>     G_delta = 1.0/80.0;   // natural recovery rate
+>     G_alpha = 1.0/60.0;    // immunity loss
+44c48
+<     ifstream ifs2( "C:\\051115\\IBM\\mds_mapping\\order400.txt"  );
+---
+>     ifstream ifs2( "data/order100last.txt"  );
+59c63
+<     ifstream ifs3( "C:\\051115\\IBM\\mds_mapping\\movmigrate.txt"  );
+---
+>     ifstream ifs3( "data/movmigratejuly.txt"  );
+72c76
+<     ifstream ifs4( "C:\\051115\\IBM\\mds_mapping\\movmigrate.txt"  );
+---
+>     ifstream ifs4( "data/movmigratejuly.txt"  );
+82,83c86,87
+< //		    lis->listvill = G_list[i]->listvill;
+< //		    listt[i] = lis;
+---
+> //          lis->listvill = G_list[i]->listvill;
+> //          listt[i] = lis;
+105c109
+<     ifstream ifs( "C:\\051115\\IBM\\mds_mapping\\regionsdatanew.txt"  );
+---
+>     ifstream ifs( "data/regions_datajuly2.txt"  );
+140c144,145
+<         int I=int(G_prev*vregion[i]->v[0]);
+---
+>         int I=int((vregion[i]->v[3]*5.1/0.75)*vregion[i]->v[0]);
+>         I = ( I > number ? number : I );
+162c167
+<         //cout<< "betas:"<< betas[i]<<"\t"<<endl;
+---
+>         //cout<< "betas:"<< mptime[i]<<"\t"<<endl;
+192c197
+<     G_tauab = 1.0/1.5;
+---
+> 
+200c205
+<     G_mobility_static = 250.0/365.0;    // static pop probability of moving to another village
+---
+>     G_mobility_static = 125.0/365.0;    // static pop probability of moving to another village
+202c207
+<     G_mobility_mobile = 250.0/365.0;     // seasonal migrant prob of moving to another village
+---
+>     G_mobility_mobile = 125.0/365.0;     // seasonal migrant prob of moving to another village
+219,220c224,225
+<     strfile_age << "C:\\051115\\IBM\\mds_mapping\\agestruct.txt" ;
+<     fout_age.open(strfile_age.str().c_str());
+---
+> //    strfile_age << "C:\\051115\\IBM\\mds_mapping\\agestruct100.txt" ;
+> //    fout_age.open(strfile_age.str().c_str());
+222,225c227,228
+< //    strfile_regions << "C:\\051115\\IBM\\mds_mapping\\regionresults.txt" ;
+< //    fout_regions.open(strfile_regions.str().c_str());
+< 
+<      /***********************************/
+---
+>     strfile_regions << "outputs/regionresults"<< "-delta-"<< G_delta<<"-trigger-"<< G_trigger<< "-mobility-"<<G_mobility_static<< "-G_phia-"<< G_phia <<".txt" ;
+>     fout_regions.open(strfile_regions.str().c_str());
+226a230
+>     /***********************************/
+233,234c237,241
+<     G_tmax = 365*15;
+<     G_maxa = 100;
+---
+>     // G_tmax = 365*50;
+>     G_tmax = 365*5;
+>     // G_tmax = 40;
+> 
+>     G_maxa = 85;
+236c243
+<     G_amp = 0.6;
+---
+>     G_amp = 0.9;
+252,254c259,260
+<     G_alpha = 1.0/60.0;    // immunity loss
+<     G_mu = 0.0222/365.0;   // death rate
+<     G_delta = 1.0/160.0;   // natural recovery rate
+---
+> 
+>     G_mu = 0.0222/365.0;   // death rate 0.0222 - 45 yrs life expectancy
+263c269
+<     G_phia = 1.0;
+---
+> 
+272,275c278,279
+< //    G_sig = 1.0/15.0;
+<     G_sig = 1.0/10.0;
+< //    G_mu1 = 80.0;
+<     G_mu1 = 35.0;
+---
+>     G_sig = 1.0/15.0;
+>     G_mu1 = 80.0;
+279a284
+>     G_covab = 0.9;
+285,287c290,291
+<     G_timecomp = 3.5;
+<     G_fullcourse = 0.8;
+<     G_covab = 0.6;
+---
+>     G_timecomp = 1.5;
+>     G_fullcourse = 0.9;
+291,292c295,296
+<     G_mellow = 1.0/3.0;
+<     G_initclin = 0.05;
+---
+>     G_mellow = 1.0/10.0;
+>     G_initclin = 0.02;
+325c329
+<      G_cBradab = 0.27*G_cBrodab + (1.0-0.27)*G_cBrodb;
+---
+>      G_cBradab = 0.27*G_cBrodab + (1.0-0.27)*G_cBrodb; // Uninitialised variable?
+329c333
+<      G_clradab = 0.27*G_clrodab + (1.0-0.27)*G_clrodb;
+---
+>      G_clradab = 0.27*G_clrodab + (1.0-0.27)*G_clrodb; // Uninitialised variable?
+334c338
+<      G_cBrbdb = (1.0/3.0) * 0.8;
+---
+>      G_cBrbdb = (1.0/3.0)*0.8;
+366a371,372
+>      G_antroph = 0.95;
+>      G_indoorpref = 0.95;
+368,369c374,375
+<      G_itneffect= 0.25;
+<      G_itnprop = 0.7;       // change or use data to inform
+---
+>      G_itneffect = 0.5*G_antroph*G_indoorpref;
+>      G_itnprop = 0.2;       // change or use data to inform
+378,380c384,387
+<     treatab=vector<float>(G_N,0);
+<     treatclinical=vector<float>(G_N,0);
+<     treatasympt=vector<float>(G_N,0);
+---
+>     treatab=vector<float>(G_N,0.0);
+>     treatclinical=vector<float>(G_N,0.0);
+>     treatasympt=vector<float>(G_N,0.0);
+>     seasonvec=vector<float>(G_tmax,0.0);
+383c390
+<         g_seed=-251978884+thisrun;
+---
+>         // g_seed=-251978884+thisrun;
+386,387c393,394
+<         strfile_resistance << "C:\\051115\\IBM\\mds_mapping\\logmda-run-"<<thisrun << "-prev-"<<G_prev<<"-mdas-"<<nummdas ;
+<         strfile_resistance << "-mdacov-" <<  G_tauab << "-teams-" << G_mteams << "-trigger-"<< G_trigger<< "-resistinit-"<< pa[0];
+---
+>         strfile_resistance << "outputs/logmda-run-"<<thisrun << "-prev-"<<G_prev<<"-G_phia-"<< G_phia ;
+>         strfile_resistance << "-mdacov-" <<  G_tauab << "-delta-"<< G_delta << "-teams-" << G_mteams << "-trigger-"<< G_trigger<< "-resistinit-"<< pa[0];
+396a404,469
+>         VectorSpaceage* vage[G_N];
+>         for(int i=0; i<G_N; i++){
+>             VectorSpaceage* vag = new VectorSpaceage();
+>             vag->v2a = vector<int>(4,0);
+>             vage[i] = vag;
+>         }
+>         ifstream ifage( "data/agestruct100.txt"  );
+>         for(int i=0; i<G_N; i++){
+>             vector<int> space_aux; //criar novo auxiliar
+>             age_vector( ifage, space_aux ); //ler para o auxiliar
+>             vage[i]->v2a = space_aux; //guardar o vector por apontador em vregion[i]
+>         }
+> //        for(int i= 0;i<G_N;i++){
+> //               cout << "vector: " << i << endl;
+> //               for(int j=0;j<4;j++){
+> //                    cout<<" conteudo: "<< vage[i]->v2a[j]<<" ";
+> //               }
+> //                cout<< "\t"<<endl;
+> //                cout<<"first: "<< vage[i]->v2a[0]<<" "<< endl;
+> //        }
+> 
+> 
+>         agev=std::vector<int>(G_N,0);
+>         moiv=std::vector<int>(G_N,0);
+>         clinstat=std::vector<int>(G_N,0);
+>         levelimm=std::vector<int>(G_N,0);
+>         cumminf=std::vector<int>(G_N,0);
+> 
+>         for (int i=0;i<G_N;i++){
+>             int agev=int(vage[i]->v2a[0]);
+>             int moiv=int(vage[i]->v2a[1]);
+>             int clinstat=int(vage[i]->v2a[2]);
+>             int levelimm=int(vage[i]->v2a[3]);
+>             int cumminf=int(vage[i]->v2a[4]);
+> 
+>             G_demes[i]->age=agev;
+>             G_demes[i]->moi=moiv;
+>             G_demes[i]->clinical=clinstat;
+>             G_demes[i]->immunity_level=levelimm;
+>             G_demes[i]->cummulative_exposures=cumminf;
+> 
+>             if (G_demes[i]->immunity_level>0){
+>                 G_demes[i]->immunity=IMMUNE;
+>                 G_demes[i]->immunity_days=40;
+>             }
+>             else{G_demes[i]->immunity=NONIMMUNE;}
+>         }
+> 
+> 
+>         VectorSpace5* seasonvec[G_tmax];
+>         for(int i=0; i<G_tmax; i++){
+>             VectorSpace5* vss = new VectorSpace5();
+>             vss->vseas= vector<float>(G_xregion,0.0);
+>             seasonvec[i] = vss;
+>         }
+>         ifstream ifseason( "data/seasonality_100yrs.txt"  );
+>         for(int d=0; d<G_tmax; d++){
+>             vector<float> space_aux4; //criar novo auxiliar
+>             season_vector( ifseason, space_aux4 ); //ler para o auxiliar
+>             seasonvec[d]->vseas = space_aux4; //guardar o vector por apontador em vregion[i]
+>         }
+> //        for(int i= 0;i<G_tmax;i++){
+> //            cout << "time: " << i << endl;
+> //            cout<<"beta: "<< seasonvec[i]->vseas[0]<< endl;
+> //        }
+> 
+403c476,478
+<             printResistance();
+---
+>             cout<<"before"<<endl;
+>             printResistance(timestep);
+>             cout<<"res"<<endl;
+409,410d483
+<             cout << "\trunning 1111 " << endl;
+< 
+413c486
+< //            startvillagestrigger();
+---
+>             //startvillagestrigger();
+415c488
+<             cout<<"startvillages complete"<<endl;
+---
+>             //cout<<"startvillages complete"<<endl;
+422c495
+<             cout<<"before"<<endl;
+---
+>             //cout<<"before"<<endl;
+431c504
+<             settreatrate();
+---
+>             settreatrate(); // this uses ->now but is commented in the simulation loop
+433c506
+<             printResistance();
+---
+>             printResistance(timestep);
+449a523,526
+> 
+>                    seasons=seasonvec[timestep-1]->vseas[0];
+> //                   cout << "seasonality done " << endl;
+> 
+463c540
+<                    updatevillages(timestep);
+---
+>                    //updatevillages(timestep);
+467,468c544,545
+<                    //startvillages2(timestep);
+<                    //updatevillages2(timestep);
+---
+>                    startvillages2(timestep);
+>                    updatevillages2(timestep);
+488c565,566
+<                    villages(timestep);
+---
+>                    villages(timestep, seasons);
+> //                   cout << "villages done " << endl;
+489a568
+> //                   cout << "humans done " << endl;
+490a570
+> //                   cout << "mosquitoes done " << endl;
+491a572
+> //                   cout << "movement done " << endl;
+496c577
+<                    //printmosqs();
+---
+> //                   printmosqs();
+499,501c580,583
+< //                   treattrigger(); /** deploys drugs according to the village MDA status and hands out baseline treatment based on symptomatology and whether the village is a malaria post **/
+<                    infection();    /** given the infectious mosquitoes list for each village generate new human infections **/
+< 
+---
+>                    //treattrigger(timestep); /** deploys drugs according to the village MDA status and hands out baseline treatment based on symptomatology and whether the village is a malaria post **/
+> //                   cout << "treatment done " << endl;
+>                    infection(); /** given the infectious mosquitoes list for each village generate new human infections **/
+> //                   cout << "infection done " << endl;
+514,517c596,598
+<                    //printregion();
+<                    //updatevilldata(timestep);
+<                    printResistance();
+< 
+---
+>                    //printregion(timestep);
+> //                   cout << "print regions done " << endl;
+>                    printResistance(timestep);
+523c604,605
+<                    printagestruct(timestep);
+---
+> //                   printagestruct(timestep);
+> //                   cout << "print age done " << endl;
+526a609
+>             updatevilldata(timestep);
+528a612,613
+>             fout_age.flush();
+>             fout_age.close();
+1692c1777
+< void treatment(int timestep){
+---
+> void treatment(int timestep){ // timestep not used
+1705,1706c1790,1791
+<          float G_trtasym=treatasympt[d]*0.0001;
+<          float G_trtclin=treatclinical[d];
+---
+>          float G_trtasym=treatasympt[d]*0.0001; // *0.0001 in init?
+>          float G_trtclin=treatclinical[d]; // this is ->now village
+1713c1798
+<          village=G_villages[ind];
+---
+>          village=G_villages[ind]; // home village for mda? check ->now village?
+1724c1809,1811
+<                                            k=k+1;
+---
+>                             // Any need to check for current drug? e.g.check ->mda_days > a value
+>                             // G_tauab likely to vary between villages?
+>                                            k=k+1; // k not used
+1729a1817,1818
+>                                            // Is it possible a host can be treated multiple times during one mda visit?
+>                                            // Should this be avoided?
+1755a1845,1846
+>         // what about other drugs? should this be == NODRUG? -yes
+>         // Is this checking if there is any drug in the system, or new drugs only i.e. mda-ed drugs, drug_days = 0?
+1784,1789c1875,1883
+<      for (int i=G_delay; i<G_tmax; i+=365){
+<          if (i>=G_first){
+<          surveys.push_back(i);
+<          cout<<"time: "<<i;
+<          }
+<      }
+---
+> //     for (int i=G_delay; i<G_tmax; i+=365){
+> //         if (i>=G_first){
+> //         surveys.push_back(i);
+> //         cout<<"time: "<<i;
+> //         }
+> //     }
+> 
+>      surveys.push_back(1860);
+>      surveys.push_back(2065);
+1796a1891
+> 
+1821c1916
+<                      int SAMPLES = 100;
+---
+>                      int SAMPLES = 50;
+1837c1932,1935
+<                         village->post = 1;
+---
+>                         if (village->post==0){
+>                             village->post = 1;
+>                             village->mptime = timestep;
+>                         }
+1885c1983
+< void treattrigger(){
+---
+> void treattrigger(int timestep){
+1898c1996
+<          float G_trtasym=treatasympt[d]*0.001;
+---
+>          float G_trtasym=treatasympt[d]*0.001; // 0.0001?
+1910a2009
+>                    village->mda_start = timestep;
+1982a2082
+>             // only place where deme->strategy is used
+2260a2361
+>     float mpp, doff;
+2263a2365,2375
+> 
+> //        mpp=ran2();
+> //        if(mpp<G_poormp){
+> //            village->postfail=1;
+> //        }
+> //        if (village->postfail==1){
+> //            doff=ran2();
+> //            if (doff<G_daysoff){
+> //                village->postfail=0;
+> //            }
+> //        }
+2303c2415
+<                 if(randomEvent <= G_c* deme_bite_past->susceptibility){
+---
+>                 if(randomEvent <= G_c* deme_bite_past->infectiousness){
+2390c2502
+<                 if(randomEvent <= G_c* deme_bite_past->susceptibility){
+---
+>                 if(randomEvent <= G_c* deme_bite_past->infectiousness){
+2477c2589
+<     int db, dba;
+---
+>     int db, dba, dbm;
+2478a2591
+>     vill* village;
+2486a2600
+>         village = G_villages[i];
+2488,2490c2602,2604
+<         //float lambdaPoisson = (betaseason[i]*number_pop_area[i]);
+<         //newbites = int(poissonHighPrecision(lambdaPoisson));
+<         newbites = mosquito->infectious;
+---
+>         float lambdaPoisson =(betaseason[i]*village->herenow.size());
+>         newbites = int(poissonHighPrecision(lambdaPoisson));
+>         //newbites = mosquito->infectious;
+2496c2610,2613
+<         for(int ninfec=0; ninfec< newbites; ninfec++ ){
+---
+>         for(int ninfec=0; ninfec<newbites; ninfec++ ){
+>             dbm = int(ran2()* mosquito->resistancei.size());
+>             if (dbm>0){
+>             int res = mosquito->resistancei[dbm];
+2501,2502c2618
+<             int res = mosquito->resistancei[ninfec];
+<              //cout << "ninf" << ninfec << "res" << res <<endl;
+---
+>             //cout << "ninf" << ninfec << "res" << res <<endl;
+2538a2655
+> 
+2560a2678
+>         }
+3351c3469
+< void villages(int timestep){
+---
+> void villages(int timestep, float seasons){
+3362c3480,3491
+<         betaseason[i] = betas[i]+(G_amp*betas[i]*cos(2.0*3.1416*((double(timestep)-90.0)/365.0)));
+---
+> //        betaseason[i] = betas[i]+(G_amp*betas[i]*cos(2.0*3.1416*((double(timestep)-90.0)/365.0)));
+> 
+>         betaseason[i] = (betas[i]*seasons)+(betas[i]*G_amp*0.5);
+> //        cout<<betaseason[i]<<endl;
+> 
+>         /** open posts according to data **/
+>         if (timestep==mptime[i] && mp[i]>0){
+>             if (village->post==0){
+>                 village->post = 1;
+>                 village->mptime=mptime[i];
+>             }
+>         }
+3364,3366c3493,3495
+< //        /** open posts according to data **/
+< //        if (timestep>mptime[i]){
+< //            village->post = 1;
+---
+> //        /** shut down **/
+> //        if (timestep > 2191){
+> //           village->post = 0;
+3368a3498,3508
+>         /** scale up **/
+>         if (timestep > 2191){
+>             if (village->post ==0){
+>                 float r = ran2();
+>                 if (r<0.1){
+>                     village->post=1;
+>                     village->mptime=timestep;
+>                 }
+>             }
+>         }
+> 
+3384,3390c3524,3530
+<     Deme* deme;
+<     vill* village;
+<     int d;
+<     float alpha, b, k1, mellow, mu;
+<     float deathprob;
+<     int aux1,aux2,aux3,auxt;
+<     float t1,t2,pci,delta, randomEvent, randomEvent2;
+---
+>     // Deme* deme;
+>     // vill* village;
+>     // int d;
+>     // float alpha, b, k1, mellow, mu;
+>     // float deathprob;
+>     // int aux1,aux2,aux3,auxt;
+>     // float t1,t2,pci,delta, randomEvent, randomEvent2;
+3392,3395c3532,3535
+<     int j, j1, j2;
+<     int region, ind, malp, mpst;
+<     int level, moi, cumm, age;
+<     float susceptibility=1.0;
+---
+>     // int j, j1, j2;
+>     // int region, ind, malp, mpst;
+>     // int level, moi, cumm, age;
+>     // float susceptibility=1.0;
+3397a3538,3559
+>     int tid = 0;
+> 
+>     #pragma omp parallel for private(tid)
+>     for (int d=0;d<G_N;d++){
+>     // for (d=0;d<G_N;d++){
+> 
+>         // tid = omp_get_thread_num();
+>         // cout << "tid:" << tid << ",dem:" << d << endl << std::flush;
+> 
+>         Deme* deme;
+>         vill* village;
+>         float alpha, b, k1, mellow, mu;
+>         float deathprob;
+>         int aux1,aux2,aux3,auxt;
+>         float t1,t2,pci,delta, randomEvent, randomEvent2;
+>         // int rec=0;
+>         int j, j1, j2;
+>         int region, ind, malp, mpst;
+>         int level, moi, cumm, age;
+>         float susceptibility=1.0;
+>         // int cc = 0;
+> 
+3399d3560
+<     for (d=0;d<G_N;d++){
+3412c3573
+< 
+---
+>         deme->clintoday=0;
+3419,3423c3580,3583
+<         deathprob = 0.1*((1.5*(exp(-age*G_sig)))+(0.25*G_sig*exp((1/G_mu1*age)/(1/1.8))));
+< //        deathprob = (0.5*(exp(-age*G_sig)))+(2.5*G_sig*exp((1/G_mu1*age)/(1/1.8)));
+< 
+< //        if (age>70){
+< //            deme->death = deathprob*G_mu/0.05;
+---
+>         deathprob = (0.5*(exp(-age*G_sig)))+(2.5*G_sig*exp((1/G_mu1*age)/(1/1.8)));
+>         deme->death = deathprob*G_mu;
+> //        if (age>75){
+> //            deme->death = deathprob*G_mu/0.5;
+3425c3585
+< //        else{deme->death = deathprob*G_mu/0.8;}
+---
+> //        else{deme->death = deathprob*G_mu/0.99;}
+3510c3670
+<         else if(deme->drug == PIPARTE ){
+---
+>         else if(deme->drug == PIPARTE ){ // need to reset deme->prim ? 
+3512c3672
+<             randomEvent2=ran2();
+---
+>             randomEvent2=ran2(); // what is the relation between the two events?
+3579c3739
+<         //susceptibility = (1-G_r*exp(-G_k*age));
+---
+> //        susceptibility = (1-G_r*exp(-G_k*age));
+3580a3741
+>         deme->infectiousness = susceptibility;
+3584a3746
+>            deme->infectiousness =  deme->infectiousness*(1.0-G_itneffect)*G_phic;
+3587a3750
+>            deme->infectiousness =  deme->infectiousness*(1.0-G_itneffect)*G_phia;
+3592a3756
+>            deme->infectiousness =  deme->infectiousness*G_phic;
+3595a3760
+>            deme->infectiousness =  deme->infectiousness*G_phia;
+3604c3769,3771
+<         deme->probclinicallb=(0.25*exp(-(cumm-1))+exp((-0.6*cumm)))/level;
+---
+> //        deme->probclinicallb=(0.4*exp(-(cumm-1)*0.1)+exp((-0.5*cumm)))/sqrt(level);
+>         deme->probclinicallb=(0.1*exp(-(cumm-2)*0.1)+exp((-0.9*cumm)))/sqrt(level);
+>         //deme->probclinicallb=exp(-0.1*(pow(cumm,1.65)));
+3607c3774
+<         /**  set treatment rates **/
+---
+>         /**  set treatment rates **/ // Same values every step? Village property
+3609c3776
+<             treatclinical[d] = (1.0/G_timecomp)*G_fullcourse*G_covab;
+---
+>             treatclinical[d] = (1.0/G_timecomp)*G_fullcourse*G_covab; //clinical == asymptomatic? 
+3639c3806,3811
+<         /**  infection to infectious stage **/
+---
+>         // Does this mean infections can go from blood_q to infectious_q
+>         // and then to infections (G_gamma * G_sigma) in one time step?
+> 
+>         // clinical != NOINFECTION iff infectious?
+> 
+>         /**  infection to infectious stage **/ 
+3652a3825
+>                             deme->clintoday=1;
+3654c3827,3828
+<                         else{deme->clinical = ASYMPTOMATIC;}
+---
+>                         else{deme->clinical = ASYMPTOMATIC;
+>                         deme->clintoday=0;}
+3659a3834
+>                             deme->clintoday=1;
+3661c3836,3837
+<                         else{deme->clinical = ASYMPTOMATIC;}
+---
+>                         else{deme->clinical = ASYMPTOMATIC;
+>                         deme->clintoday=0;}
+3673c3849
+<         if (G_demes[d]->infections.empty()==false){
+---
+>         if (G_demes[d]->infections.empty()==false){ // what about blood_q
+3708c3884
+<         if (deme->immunity_level>0 && deme->immunity_days>40){
+---
+>         if (deme->immunity==IMMUNE && deme->immunity_days>40 && deme->immunity_level>1 ){
+3752a3929
+>                     // cout << "tid:" << tid << ",dem:" << d  << ",size:" << deme->infections.size();
+3754c3931,3937
+<                     deme->dominant=deme->infections.at(rr);
+---
+>                     // cout << ",rr:" << rr << endl << std::flush;
+>                     // try{
+>                         deme->dominant=deme->infections.at(rr);
+>                     // } catch (const std::out_of_range& e) {
+>                     //     cout << "tid:" << tid << ",dem:" << d << endl << e.what() << endl << std::flush;
+>                     //     exit(0);
+>                     // }
+3761c3944,3945
+<         int j=0;
+---
+>         // int j=0;
+>         j=0;
+4683c4867
+< void printResistance(){
+---
+> void printResistance(int timestep){
+4699a4884,4889
+>      int postclin = 0;
+>      int nonpostclin = 0;
+>      int postasym = 0;
+>      int nonpostasym= 0;
+>      int popclin = 0;
+>      int popnonclin = 0;
+4710a4901,4904
+>         if (mp[d]>0){
+>             popclin=popclin+G_villdata[d]->popsize;
+>         }
+>         else{popnonclin=popnonclin+G_villdata[d]->popsize;}
+4746a4941,4946
+>                 if (mp[ind]>0){
+>                     postclin+=1;
+>                 }
+>                 else if (mp[ind]==0){
+>                     nonpostclin+=1;
+>                 }
+4749a4950,4955
+>                 if (mp[ind]>0){
+>                     postasym+=1;
+>                 }
+>                 else if (mp[ind]==0){
+>                     nonpostasym+=1;
+>                 }
+4780a4987
+>     int TODAY=0;
+4791c4998,5000
+<     int tot=0;;
+---
+>     int tot=0;
+>     int clins=0;
+> 
+4829a5039,5041
+>         if (deme->clintoday==1){
+>             clins+=1;
+>         }
+4839c5051
+<     cout << "FAIL:" << FAIL <<"\tCLEAR: "<< CLEAR << endl;
+---
+>     cout << "FAIL:" << FAIL <<"\tCLEAR: "<< CLEAR <<"\tpopCLin: "<< popclin <<"\tpopnonCLin: "<< popnonclin << endl;
+4841c5053
+<     fout_resistance << RO << "\t" << RA << "\t" << RB << "\t" << RO+RA+RB<<"\t" << CLIN<<"\t" << ASYM<<"\t" << SUMAGE<<"\t" << SUMINFAGE<<"\t"<<  SART<<" \t"<<SPIP << "\t"<<SPIPARTE<<"\t"<<SAL <<"\t"<<SLUM <<"\t"<<SSUM << "\t"<< MDAS << "\t"<<FAIL<<"\t"<<CLEAR <<endl;
+---
+>     fout_resistance << RO << "\t" << RA << "\t" << RB << "\t" << RO+RA+RB<<"\t" << CLIN<<"\t" << ASYM<<"\t" << SUMAGE<<"\t" << SUMINFAGE<<"\t"<<  SART<<" \t"<<SPIP << "\t"<<SPIPARTE<<"\t"<<SAL <<"\t"<<SLUM <<"\t"<<SSUM << "\t"<< clins << "\t"<<FAIL<<"\t"<<CLEAR << "\t"<<postclin<<"\t"<<nonpostclin<<"\t"<<postasym<<"\t"<<nonpostasym <<endl;
+4916c5128
+<      strfile_info << "D:/Users/ricaguas/Desktop/Individual_Based/info" ;
+---
+>      strfile_info << "D:/Users/ricaguas/Desktop/Individual_Based/infoasym" ;
+4961c5173
+<          float G_trtasym=treatasympt[d]*0.1;
+---
+>          float G_trtasym=treatasympt[d]*0.1; // 0.0001?
+4980,5006c5192,5218
+<      if (timestep % 30 == 0){
+<      Deme* deme;
+<      float LAT;
+<      float LONG;
+<      int POP;
+<      int RO;
+<      int RA;
+<      int RB;
+<      int SART = 0;
+<      int SPIP = 0;
+<      int SPIPARTE = 0;
+<      int SSUM = 0;
+<      int SAL = 0;
+<      int SLUM = 0;
+< 
+<      for (int d=0;d<G_xregion;d++){
+<         G_villdata[d]->SUM_IRO=0;
+<         G_villdata[d]->SUM_IRA=0;
+<         G_villdata[d]->SUM_IRB=0;
+<         G_villdata[d]->SUM_IRB=0;
+<         G_villdata[d]->SUM_ART=0;
+<         G_villdata[d]->SUM_PIP=0;
+<         G_villdata[d]->SUM_PIPARTE=0;
+<         G_villdata[d]->SUM_AL=0;
+<         G_villdata[d]->SUM_LUM=0;
+<      }
+< 
+---
+> //     if (timestep % 30 == 0){
+> //     Deme* deme;
+> //     float LAT;
+> //     float LONG;
+> //     int POP;
+> //     int RO;
+> //     int RA;
+> //     int RB;
+> //     int SART = 0;
+> //     int SPIP = 0;
+> //     int SPIPARTE = 0;
+> //     int SSUM = 0;
+> //     int SAL = 0;
+> //     int SLUM = 0;
+> //
+> //     for (int d=0;d<G_xregion;d++){
+> //        G_villdata[d]->SUM_IRO=0;
+> //        G_villdata[d]->SUM_IRA=0;
+> //        G_villdata[d]->SUM_IRB=0;
+> //        G_villdata[d]->SUM_IRB=0;
+> //        G_villdata[d]->SUM_ART=0;
+> //        G_villdata[d]->SUM_PIP=0;
+> //        G_villdata[d]->SUM_PIPARTE=0;
+> //        G_villdata[d]->SUM_AL=0;
+> //        G_villdata[d]->SUM_LUM=0;
+> //     }
+> //
+5010,5013c5222,5225
+<      strfile_info << "C:\\051115\\IBM\\mds_mapping\\info" ;
+<      strfile_info << "-move-"<<G_move ;
+<      strfile_info << "-trigg-"<<G_trigger;
+<      strfile_info << "-time-"<<timestep ;
+---
+>      strfile_info << "outputs/info" ;
+>      strfile_info << "-trigg-"<<G_trigger<< "-delta-"<< G_delta;
+>      strfile_info << "-G_phia-"<<G_phia ;
+>      strfile_info << "-mobility-"<<G_mobility_static ;
+5016,5061c5228,5273
+< 
+<      for (int i=0; i<G_N; i++){
+<         deme=G_demes[i];
+<         int region=deme->now;
+<         int ind=region-1000;
+< 
+<         int j=0;
+<         int temp=0;
+< 
+<         if (deme->infections.empty()==false){
+<             //cout<<"state"<<deme->transmission<<endl;
+<             vector<int>::iterator it = deme->infections.begin();
+<             for ( ; it != deme->infections.end(); ) {
+<                 j+=1;
+<                 int aux2 = deme->infections.at(j-1);
+<                 if (aux2>temp){
+<                     temp=aux2;
+<                 }
+<                 ++it;
+<             }
+<             if (temp==RESISTRO){
+<                 G_villdata[ind]->SUM_IRO+=1;
+<             }
+<             else if (temp==RESISTRA){
+<                 G_villdata[ind]->SUM_IRA+=1;
+<             }
+<             else if (temp==RESISTRB){
+<                 G_villdata[ind]->SUM_IRB+=1;
+<             }
+<         }
+<         if (deme->drug==ARTESUNATE){
+<             G_villdata[ind]->SUM_ART+=1;
+<         }
+<         else if (deme->drug==PIPARTE){
+<             G_villdata[ind]->SUM_PIPARTE+=1;
+<         }
+<         else if (deme->drug==PIPERAQUINE){
+<             G_villdata[ind]->SUM_PIP+=1;
+<         }
+<         else if (deme->drug==LUMEFANTRINE){
+<             G_villdata[ind]->SUM_LUM+=1;
+<         }
+<         else if (deme->drug==AL){
+<             G_villdata[ind]->SUM_AL+=1;
+<         }
+<     }
+---
+> //
+> //     for (int i=0; i<G_N; i++){
+> //        deme=G_demes[i];
+> //        int region=deme->now;
+> //        int ind=region-1000;
+> //
+> //        int j=0;
+> //        int temp=0;
+> //
+> //        if (deme->infections.empty()==false){
+> //            //cout<<"state"<<deme->transmission<<endl;
+> //            vector<int>::iterator it = deme->infections.begin();
+> //            for ( ; it != deme->infections.end(); ) {
+> //                j+=1;
+> //                int aux2 = deme->infections.at(j-1);
+> //                if (aux2>temp){
+> //                    temp=aux2;
+> //                }
+> //                ++it;
+> //            }
+> //            if (temp==RESISTRO){
+> //                G_villdata[ind]->SUM_IRO+=1;
+> //            }
+> //            else if (temp==RESISTRA){
+> //                G_villdata[ind]->SUM_IRA+=1;
+> //            }
+> //            else if (temp==RESISTRB){
+> //                G_villdata[ind]->SUM_IRB+=1;
+> //            }
+> //        }
+> //        if (deme->drug==ARTESUNATE){
+> //            G_villdata[ind]->SUM_ART+=1;
+> //        }
+> //        else if (deme->drug==PIPARTE){
+> //            G_villdata[ind]->SUM_PIPARTE+=1;
+> //        }
+> //        else if (deme->drug==PIPERAQUINE){
+> //            G_villdata[ind]->SUM_PIP+=1;
+> //        }
+> //        else if (deme->drug==LUMEFANTRINE){
+> //            G_villdata[ind]->SUM_LUM+=1;
+> //        }
+> //        else if (deme->drug==AL){
+> //            G_villdata[ind]->SUM_AL+=1;
+> //        }
+> //    }
+5063a5276
+>      vill* village;
+5065,5076c5278,5280
+<          POP = G_villdata[d]->popsize;
+<          LAT = G_villdata[d]->lat;
+<          LONG = G_villdata[d]->lon;
+<          RO=G_villdata[d]->SUM_IRO;
+<          RA=G_villdata[d]->SUM_IRA;
+<          RB=G_villdata[d]->SUM_IRB;
+<          SART=G_villdata[d]->SUM_ART;
+<          SPIP=G_villdata[d]->SUM_PIP;
+<          SPIPARTE=G_villdata[d]->SUM_PIPARTE;
+<          SAL=G_villdata[d]->SUM_AL;
+<          SLUM=G_villdata[d]->SUM_LUM;
+<          SSUM = SART+SPIP+SPIPARTE+SAL+SLUM;
+---
+>          village=G_villages[d];
+>          int days =village->mda_start;
+>          int open = village->mptime;
+5078c5282
+<          fout_info<<POP<< "\t" << LAT << "\t" << LONG <<"\t"<<RO << "\t" << RA << "\t" << RB << "\t" << RO+RA+RB<<"\t" << SART<<" \t"<<SPIP<< "\t"<<SPIPARTE<<"\t"<<SAL << "\t"<< SLUM <<"\t"<<SSUM<<endl;
+---
+>          fout_info<<days<< "\t" << open << endl;
+5082d5285
+<      }
+5103c5306,5307
+<     if (timestep == 2){
+---
+>     if (timestep == 18250){
+>         cout<<"print age"<<endl;
+5111c5315
+< 
+---
+>             //cout<<age<<"\t"<<moi<<"\t"<<clin<<"\t"<<level<<"\t"<<cumm<<endl;
+5132,5133c5336,5337
+<             if (deme->transmission==INFECTIOUS){
+<                inf[i]=inf[i]+1;
+---
+>             if (deme->clinical==CLINICAL){
+>                inf[i]+=1;

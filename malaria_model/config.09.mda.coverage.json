@@ -1,0 +1,221 @@
+{
+    "simulation" : {
+        "schema_file_name" : "schema.config.json",
+        "total_steps" : 5475,
+        "title": "MDA Coverage, targeted VC&MDA",
+        "reports" : {
+            "prevalence_daily" : true,
+            "genotype_weights" : false,
+            "drug_daily" : false,
+            "infection_daily" : false,
+            "infection_daily_village" : false,
+            "mosquito_daily" : false,
+            "treatment_daily" : false,
+            "mutation_daily" : false,
+            "clearance_natural_daily" : false,
+            "clearance_drug_daily" : false
+        },
+        "plots" : {
+            "prevalence_daily_y_max" : 20
+        },
+        "batch_mode" : true,
+        "init_infections_from_regions" : false,
+        "init_infections_from_agestruct" : true,
+        "export" : false
+    },
+    "village" : {
+        "data_file" : {
+            "name" : "data/regions_datajuly2_normal.txt",
+            "delimiter" : "t",
+            "rows_to_read" : 1000,
+            "overwrite_ra_rate_if" : true,
+            "overwrite_ra_rate_with" : 0.1
+        }
+    },
+    "mobility" : {
+        "enabled" : true,
+        "static_population_move_out_probability" : 0.0685,
+        "static_population_move_out_probability_not" : 0.0,
+        "static_population_return_home_probability" : 0.333,
+        "non_static_population_move_out_probability" : 0.0685,
+        "non_static_population_move_out_probability_not" : 0.0,
+        "non_static_population_return_home_probability" : 0.333
+    },
+    "treatment" : {
+        "timecomp" : 4,
+        "fullcourse" : 0.8,
+        "covab" : 0.6,
+        "nomp" : 0.1,
+        "asymptomatic_to_clinical_ratio" : 0.0001,
+        "treatment_rate_mda" : 0.5333,
+        "establish_malaria_post_during_mda" : true,
+        "treat_clean_hosts" : true,
+        "treat_asymptomatic_hosts" : true,
+        "func_treatment_general_version" : "mp"
+    },
+    "infection" : {
+        "init_with_uniform_prevalence_if" : false,
+        "init_with_uniform_prevalence_with" : 0.1,
+        "init_transmission_coefficient_scaling_factor_a" : 5.1,
+        "init_transmission_coefficient_scaling_factor_b" : 0.75,
+        "transmission_coefficient_to_beta_scaling_factor" : 0.10311,
+        "use_all_infectious_bites" : false,
+        "susceptibility_multiplier" : 1.0,
+        "infectiousness_multiplier" : 1.0,
+        "injection" : {
+            "enabled" : false,
+            "at_time_step" : 1095,
+            "type" : "RB",
+            "size_as_in_percentage_of_positive_population" : 0.01
+        }
+    },
+    "mosquito" : {
+        "ode" : {
+            "in_use" : false,
+            "init" : {
+                "max_larval_capacity_file" : {
+                    "name" : "data/mosquito_max_larval_capacity_0.txt"
+                }
+            },
+            "k_value_mosq_1" : 0.14,
+            "k_value" : 0.26
+        },
+        "init" : {
+            "infected_mosquito_to_infected_human_ratio" : 0.04,
+            "infectious_mosquito_to_infected_human_ratio" : 0.02
+        },
+        "seasonality" : {
+            "switched_on": true,
+            "use_data_file" : false,
+            "data_file" : {
+                "name" : "data/seasonality_100years4_avg_0.7.txt",
+                "name_not" : "data/seasonality_100years.txt"
+            },
+            "amplitude" : 0.6,
+            "amplitude_multiplier" : 0.5,
+            "cos_pi_multiplier" : 2.0,
+            "cos_days_offset" : 90.0
+        },
+        "incubation_days" : 14.0,
+        "infected_days" : 20.0,
+        "infectious_days" : 7.0
+    },
+    "human" : {
+        "male_percentage" : 0.482,
+        "age_weight_vector_file" : "data/age_weights_vector_demo.txt",
+        "func_death_probability" : {
+            "0-karenjan17; 1-mmc_wp2; 2-mda_coverage": "",
+            "version" : 2
+        }
+    },
+    "within_host" : {
+        "init_file" : {
+            "use_old_format" : false,
+            "name_old_format" : "data/agestruct100.txt",
+            "name_not" : "data/mob_0.3425_dis_normal_prev_0.20_agestruct.csv",
+            "name_not" : "data/mob_0.0685_dis_normal_prev_0.10_agestruct.csv",
+            "name" : "data/mob_0.0685_dis_normal_prev_0.05_agestruct.csv",
+            "delimiter" : "t",
+            "use_age_column" : true,
+            "ra_rate" : 0.1
+        },
+        "init_clinical_probability" : 0.02,
+        "susceptibility_default" : 1.0,
+        "infectiousness_default" : 1.0,
+        "phi_a" : 1.0,
+        "phi_c" : 1.0,
+        "prophylaxis_effect" : 1.0,
+        "0-karenjan17,mda_coverage;1-durgrestest;2-mmc_wp2": "",
+        "func_clinical_probability_blood_to_infectious_version" : 0,
+        "mellow_days" : 3.0,
+        "natural_recovery_days" : 160.0,
+        "natural_recovery_resistance_cost" : 0.0,
+        "immunity" : {
+            "days_until_loss_start" : 40,
+            "level_until_loss_start" : 1,
+            "loss_days" : 60.0
+        }
+    },
+    "drug" : {
+        "failure_if_clinical_on_day" : 28,
+        "allow_act_to_a" : true,
+        "possible_to_have_drug_a_only" : true,
+        "resistance_multipliers" : {
+            "enabled" : false,
+            "drug_a_effect_on_ra" : 0.1,
+            "drug_ab_effect_on_ra" : 0.6,
+            "drug_b_effect_on_rb" : 0.1,
+            "drug_ab_effect_on_rb" : 0.5,
+            "drug_a_effect_on_rab" : 0.1,
+            "drug_b_effect_on_rab" : 0.1,
+            "drug_ab_effect_on_rab" : 0.1 
+        }
+    },
+    "genotype" : {
+        "mutation" :{
+            "enabled" : false,
+            "probabilities_not_in_use" : [0.2,0.2,0.2,0.2,0.2,0.2,0.2],
+            "prob_single_resistance" : 1e-9,
+            "prob_single_resistance_w_act" : 1e-5,
+            "prob_single_type_a_type_b_ratio" : 1
+        }
+    },
+    "intervention" : {
+        "itn" : {
+            "init_probability_per_human" : 0.5,
+            "preference_indoor" : 0.95,
+            "preference_human" : 0.2,
+            "effectiveness" : 0.5
+        },
+        "vector_control" : {
+            "enabled" : false,
+            "efficacy" : 0.1,
+            "target_size" : 0.1,
+            "schedule" : {
+                "starts" : [1825],
+                "durations" : [730]
+            }
+        },
+        "mda" : {
+            "enabled" : false,
+            "num_teams" : 400,
+            "schedule" : [1825],
+            "schedule_not" : [1095,1460],
+            "schedule_not" : [1155,1520],
+            "schedule_not" : [1885,2255],
+            "schedule_not" : [2615,2980],
+            "schedule_not" : [2555,2920],
+
+            "num_days_spent_in_village" : 4,
+            "num_drug_rounds" : 3,
+            "num_days_between_drug_rounds" : 32
+        },
+        "tmda" : {
+            "enabled" : false,
+            
+            "num_teams" : 30,
+            "schedule" : [365],
+
+            "num_days_spent_in_village" : 4,
+            "num_drug_rounds" : 3,
+            "num_days_between_drug_rounds" : 32,
+
+            "target_size" : 0.1,
+            "print_mda_map" : false
+        },
+        "fmda" : {
+            "enabled" : false,
+            "num_teams" : 30,
+            "schedule" : [9990000],
+
+            "num_days_spent_in_village" : 4,
+            "num_drug_rounds" : 3,
+            "num_days_between_drug_rounds" : 32,
+
+            "survey_data_delivery_delay" : 20,
+            "pcr_sensitivity" : 0.8,
+            "pcr_sample_size" : 50,
+            "prevalence_threshold" : 0.1
+        }
+    }
+}
